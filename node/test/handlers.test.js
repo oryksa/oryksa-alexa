@@ -391,3 +391,14 @@ test("the skill's map overrides an ORYKSA default of the same name", async () =>
   await h.catchAll.handle(input({ intent: "AgendaIntent", locale: "pt-BR" }));
   assert.equal(h.log.find((c) => c[0] === "chat")[2].message, "que trabalhos tenho hoje");
 });
+
+test("a skill pode forçar a língua da resposta (a Alexa não tem pt-PT)", async () => {
+  const h = build({ lang: "pt" });
+  await h.catchAll.handle(input({ intent: "AskIntent", slots: { q: { value: "olá" } }, locale: "pt-BR" }));
+  assert.equal(h.log.find((c) => c[0] === "chat")[2].lang, "pt",
+    "o aparelho diz pt-BR mas o negócio é português: tem de ir pt");
+
+  const h2 = build();
+  await h2.catchAll.handle(input({ intent: "AskIntent", slots: { q: { value: "olá" } }, locale: "pt-BR" }));
+  assert.equal(h2.log.find((c) => c[0] === "chat")[2].lang, "br", "sem forçar, continua a seguir o aparelho");
+});

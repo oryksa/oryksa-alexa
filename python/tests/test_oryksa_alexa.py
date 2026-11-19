@@ -643,3 +643,15 @@ class TestASkillsOwnIntents(unittest.TestCase):
         h = build(intent_sentences={"AgendaIntent": {"pt": "que trabalhos tenho hoje"}})
         h["catch_all"].handle(FakeInput(intent="AgendaIntent", locale="pt-BR"))
         self.assertEqual([c for c in h["log"] if c[0] == "chat"][0][2]["message"], "que trabalhos tenho hoje")
+
+
+class TestForcedLanguage(unittest.TestCase):
+    def test_a_skill_can_force_the_answer_language(self):
+        h = build(lang="pt")
+        h["catch_all"].handle(FakeInput(intent="AskIntent", slots={"q": {"value": "olá"}}, locale="pt-BR"))
+        self.assertEqual([c for c in h["log"] if c[0] == "chat"][0][2]["lang"], "pt")
+
+    def test_without_forcing_it_follows_the_device(self):
+        h = build()
+        h["catch_all"].handle(FakeInput(intent="AskIntent", slots={"q": {"value": "olá"}}, locale="pt-BR"))
+        self.assertEqual([c for c in h["log"] if c[0] == "chat"][0][2]["lang"], "br")

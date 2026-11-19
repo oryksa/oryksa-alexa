@@ -101,6 +101,10 @@ class OryksaBridge:
         self.deadline_seconds = float(opts.get("deadline_seconds", 24.0))
         self.progressive = opts.get("progressive", True)
         self.card = opts.get("card", True)
+        # Force the language of the answer instead of taking it from the device.
+        # Alexa has no pt-PT: a Portuguese business runs on the pt-BR locale but
+        # wants the AI to write Portuguese of Portugal, which is lang "pt".
+        self.lang = opts.get("lang")
 
     # ----------------------------------------------------------------- pieces
 
@@ -183,7 +187,7 @@ class OryksaBridge:
                 args=(handler_input, text_for(locale, "thinking"), self.opts.get("opener")),
                 daemon=True,
             ).start()
-        reply = self.api.chat(tok["token"], message=message, lang=lang_of(locale), platform="alexa")
+        reply = self.api.chat(tok["token"], message=message, lang=self.lang or lang_of(locale), platform="alexa")
         if reply.get("status_code") == 200 and reply.get("reply"):
             return str(reply["reply"])
         while time.time() - started < self.deadline_seconds:

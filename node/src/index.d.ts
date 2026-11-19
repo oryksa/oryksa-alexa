@@ -103,6 +103,10 @@ export interface OryksaAlexaOptions extends Partial<OryksaApiOptions> {
   progressive?: boolean;
   /** Draw the answer on Echo Show, or send a card. Default true. */
   card?: boolean;
+  /** Force the language the AI answers in ('pt' | 'br' | 'en' | 'es'), instead
+   *  of taking it from the device locale. Alexa has no pt-PT, so a Portuguese
+   *  business runs on pt-BR and sets lang: 'pt'. */
+  lang?: "pt" | "br" | "en" | "es";
   pollIntervalMs?: number;
   answerDeadlineMs?: number;
   sessionTtlMinutes?: number;

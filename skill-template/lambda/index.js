@@ -36,6 +36,10 @@ async function build() {
 
 exports.handler = async function (event, context) {
   if (!ready) ready = build();            // built once, reused while the Lambda is warm
-  const handler = await ready;
-  return handler(event, context);
+  const lambdaHandler = await ready;
+  // ask-sdk's .lambda() hands back a callback-style handler. Dropping the
+  // callback makes the skill answer with nothing, so it is bridged here.
+  return new Promise((resolve, reject) => {
+    lambdaHandler(event, context, (err, res) => (err ? reject(err) : resolve(res)));
+  });
 };

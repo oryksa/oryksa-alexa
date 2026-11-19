@@ -415,6 +415,10 @@ export class OryksaBridge {
     this.deadlineMs = opts.answerDeadlineMs || 24000;
     this.progressive = opts.progressive !== false;
     this.card = opts.card !== false;
+    // Force the language of the answer instead of taking it from the device.
+    // Alexa has no pt-PT: a Portuguese business runs on the pt-BR locale but
+    // wants the AI to write Portuguese of Portugal, which is lang "pt".
+    this.lang = opts.lang || null;
   }
 
   localeOf(handlerInput) {
@@ -467,7 +471,7 @@ export class OryksaBridge {
     if (this.progressive) {
       progressive = sendProgressive(handlerInput, textFor(locale, "thinking"), this.opts.fetch);
     }
-    const r = await this.api.chat(t.token, { message, lang: langOf(locale), platform: "alexa" });
+    const r = await this.api.chat(t.token, { message, lang: this.lang || langOf(locale), platform: "alexa" });
     if (progressive) { try { await progressive; } catch (_) { /* never breaks the turn */ } }
     if (r.statusCode === 200 && r.reply) return String(r.reply);
 
