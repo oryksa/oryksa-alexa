@@ -20,8 +20,15 @@ export declare function langOf(locale?: string): "pt" | "br" | "en" | "es";
 /** One of the skill's own sentences (help, reprompt, bye, error, thinking, empty). */
 export declare function textFor(locale: string, key: string): string;
 
+/** Pick a sentence out of a per-language map; pt and br answer for each other. */
+export declare function pickSentence(canned: string | Record<string, string> | undefined, lang: string): string;
+
 /** The sentence to send to the AI, taken from the request's slots or its intent. */
-export declare function utteranceOf(request: unknown, locale: string): string;
+export declare function utteranceOf(
+  request: unknown,
+  locale: string,
+  extra?: Record<string, string | Record<string, string>>
+): string;
 
 /** Strip markdown and addresses, escape XML, cut at a sentence. */
 export declare function toSsml(text: string, opts?: { maxChars?: number }): string;
@@ -105,6 +112,9 @@ export interface OryksaAlexaOptions extends Partial<OryksaApiOptions> {
   resolveCustomer?: (accessToken: string) => Promise<{ email?: string; phone?: string; name?: string }>;
   /** Or let the identity provider do it: its OIDC userinfo endpoint. */
   userInfoUrl?: string;
+  /** Map your own slotless intents to the sentence a person would have said:
+   *  { InboxIntent: { pt: "tenho mensagens novas", en: "do I have new messages" } } */
+  intentSentences?: Record<string, string | Record<string, string>>;
   skillId?: string;
   onError?: (error: unknown) => void;
 }

@@ -613,3 +613,33 @@ class TestTheHttpLayer(unittest.TestCase):
         self.assertTrue(ua, "no User-Agent: the request would be blocked")
         self.assertIn("oryksa-alexa/", ua)
         self.assertNotIn("urllib", ua)
+
+
+class TestASkillsOwnIntents(unittest.TestCase):
+    def test_a_slotless_intent_is_mapped_to_a_sentence_per_language(self):
+        sentences = {
+            "InboxIntent": {"pt": "tenho mensagens novas", "en": "do I have new messages"},
+            "EarningsIntent": {"pt": "quanto ganhei este mês", "en": "how much did I earn this month"},
+        }
+        h = build(intent_sentences=sentences)
+        h["catch_all"].handle(FakeInput(intent="InboxIntent", locale="pt-BR"))
+        self.assertEqual([c for c in h["log"] if c[0] == "chat"][0][2]["message"], "tenho mensagens novas")
+
+        h2 = build(intent_sentences=sentences)
+        h2["catch_all"].handle(FakeInput(intent="InboxIntent", locale="en-GB"))
+        self.assertEqual([c for c in h2["log"] if c[0] == "chat"][0][2]["message"], "do I have new messages")
+
+    def test_a_single_string_works_too(self):
+        h = build(intent_sentences={"OrdersIntent": "tenho encomendas novas"})
+        h["catch_all"].handle(FakeInput(intent="OrdersIntent", locale="pt-BR"))
+        self.assertEqual([c for c in h["log"] if c[0] == "chat"][0][2]["message"], "tenho encomendas novas")
+
+    def test_a_slot_still_wins_because_the_customers_own_words_come_first(self):
+        h = build(intent_sentences={"FindIntent": {"pt": "procuro alguém"}})
+        h["catch_all"].handle(FakeInput(intent="FindIntent", slots={"service": {"value": "designer de logótipos"}}, locale="pt-BR"))
+        self.assertEqual([c for c in h["log"] if c[0] == "chat"][0][2]["message"], "designer de logótipos")
+
+    def test_the_skills_map_overrides_an_oryksa_default_of_the_same_name(self):
+        h = build(intent_sentences={"AgendaIntent": {"pt": "que trabalhos tenho hoje"}})
+        h["catch_all"].handle(FakeInput(intent="AgendaIntent", locale="pt-BR"))
+        self.assertEqual([c for c in h["log"] if c[0] == "chat"][0][2]["message"], "que trabalhos tenho hoje")

@@ -68,13 +68,36 @@ INTENT_SENTENCE: Dict[str, Dict[str, str]] = {
 }
 
 
+def pick_sentence(canned: Any, lang: str) -> str:
+    """Pick a sentence out of a per-language map.
+
+    Alexa has no pt-PT, so Portugal runs on pt-BR. Both are Portuguese, so a map
+    written with "pt" still answers a "br" device and the other way round.
+    """
+    if not canned:
+        return ""
+    if isinstance(canned, str):
+        return canned
+    order = ["br", "pt"] if lang == "br" else (["pt", "br"] if lang == "pt" else [lang])
+    for key in order:
+        if canned.get(key):
+            return canned[key]
+    return canned.get("en") or canned.get("pt") or canned.get("br") or ""
+
+
 def text_for(locale: Optional[str], key: str) -> str:
     table = TXT.get(lang_of(locale)) or TXT["en"]
     return table.get(key) or TXT["en"].get(key) or ""
 
 
-def utterance_of(request: Any, locale: Optional[str]) -> str:
-    """The sentence to send to the AI, from the request's slots or its intent."""
+def utterance_of(request: Any, locale: Optional[str], extra: Optional[Dict[str, Any]] = None) -> str:
+    """The sentence to send to the AI, from the request's slots or its intent.
+
+    `extra` lets a skill map its own slotless intents to a sentence, which is how
+    a shortcut like "read my new messages" reaches an AI that only speaks prose:
+
+        {"InboxIntent": {"pt": "tenho mensagens novas", "en": "do I have new messages"}}
+    """
     intent = _get(request, "intent")
     if not intent:
         return ""
@@ -87,10 +110,9 @@ def utterance_of(request: Any, locale: Optional[str]) -> str:
         value = _slot_value(slots, name)
         if value:
             return value
-    canned = INTENT_SENTENCE.get(_get(intent, "name") or "")
-    if canned:
-        return canned.get(lang_of(locale)) or canned["en"]
-    return ""
+    name = _get(intent, "name") or ""
+    canned = (extra or {}).get(name) or INTENT_SENTENCE.get(name)
+    return pick_sentence(canned, lang_of(locale))
 
 
 def escape_ssml(text: Any) -> str:

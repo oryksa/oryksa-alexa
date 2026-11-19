@@ -245,6 +245,10 @@ class _Base:
     def _locale(self, handler_input: Any) -> str:
         return self.bridge.locale_of(handler_input)
 
+    def _sentences(self):
+        """The skill's own intent-to-sentence map, if it gave one."""
+        return self.bridge.opts.get("intent_sentences")
+
 
 class LaunchHandler(_Base):
     def can_handle(self, handler_input: Any) -> bool:
@@ -294,7 +298,7 @@ class HelpHandler(_Base):
 
     def handle(self, handler_input: Any):
         locale = self._locale(handler_input)
-        said = utterance_of(_dig(_env(handler_input), "request"), locale) or text_for(locale, "help")
+        said = utterance_of(_dig(_env(handler_input), "request"), locale, self._sentences()) or text_for(locale, "help")
         return self.bridge.reply(handler_input, said)
 
 
@@ -308,7 +312,7 @@ class CatchAllHandler(_Base):
 
     def handle(self, handler_input: Any):
         locale = self._locale(handler_input)
-        said = utterance_of(_dig(_env(handler_input), "request"), locale)
+        said = utterance_of(_dig(_env(handler_input), "request"), locale, self._sentences())
         if not said:
             builder = handler_input.response_builder
             builder.speak("<speak>" + escape_ssml(text_for(locale, "empty")) + "</speak>")

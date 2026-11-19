@@ -105,8 +105,29 @@ const INTENT_SENTENCE = {
   CalendarIntent: { en: "what is next on my calendar", br: "qual é o meu próximo compromisso", pt: "qual é o meu próximo compromisso", es: "cuál es mi próxima cita" },
 };
 
-/** Build the sentence to send to the AI from an Alexa request. */
-export function utteranceOf(req, locale) {
+/**
+ * Pick a sentence out of a per-language map.
+ *
+ * Alexa has no pt-PT, so Portugal runs on pt-BR. Both are Portuguese, so a map
+ * written with `pt` still answers a `br` device and the other way round.
+ */
+export function pickSentence(canned, lang) {
+  if (!canned) return "";
+  if (typeof canned === "string") return canned;
+  const order = lang === "br" ? ["br", "pt"] : lang === "pt" ? ["pt", "br"] : [lang];
+  for (const k of order) if (canned[k]) return canned[k];
+  return canned.en || canned.pt || canned.br || "";
+}
+
+/**
+ * Build the sentence to send to the AI from an Alexa request.
+ *
+ * `extra` lets a skill map its own slotless intents to a sentence, which is how
+ * a shortcut like "read my new messages" reaches an AI that only speaks prose:
+ *
+ *   { InboxIntent: { pt: "tenho mensagens novas", en: "do I have new messages" } }
+ */
+export function utteranceOf(req, locale, extra) {
   const lang = langOf(locale);
   const intent = req && req.intent;
   if (!intent) return "";
@@ -119,9 +140,8 @@ export function utteranceOf(req, locale) {
     const v = String(slots[k].value || "").trim();
     if (v) return v;
   }
-  const canned = INTENT_SENTENCE[intent.name];
-  if (canned) return canned[lang] || canned.en;
-  return "";
+  const canned = (extra && extra[intent.name]) || INTENT_SENTENCE[intent.name];
+  return pickSentence(canned, lang);
 }
 
 /* --------------------------------------------------------------- SSML
@@ -502,6 +522,7 @@ export class OryksaBridge {
 
 export function oryksaHandlers(opts = {}) {
   const bridge = opts.bridge || new OryksaBridge(opts);
+  const sentences = opts.intentSentences || null;
   const type = (h) => { try { return h.requestEnvelope.request.type; } catch (_) { return ""; } };
   const intent = (h) => { try { return h.requestEnvelope.request.intent.name; } catch (_) { return ""; } };
   const locale = (h) => bridge.localeOf(h);
@@ -539,14 +560,14 @@ export function oryksaHandlers(opts = {}) {
 
   const help = {
     canHandle: (h) => type(h) === "IntentRequest" && intent(h) === "AMAZON.HelpIntent",
-    handle: (h) => bridge.reply(h, utteranceOf(h.requestEnvelope.request, locale(h)) || textFor(locale(h), "help")),
+    handle: (h) => bridge.reply(h, utteranceOf(h.requestEnvelope.request, locale(h), sentences) || textFor(locale(h), "help")),
   };
 
   /** Everything else the customer says goes to the AI, whatever intent it hit. */
   const catchAll = {
     canHandle: (h) => type(h) === "IntentRequest" && !["AMAZON.StopIntent", "AMAZON.CancelIntent", "AMAZON.PauseIntent", "AMAZON.HelpIntent"].includes(intent(h)),
     handle: async (h) => {
-      const said = utteranceOf(h.requestEnvelope.request, locale(h));
+      const said = utteranceOf(h.requestEnvelope.request, locale(h), sentences);
       if (!said) {
         return h.responseBuilder
           .speak("<speak>" + escapeSsml(textFor(locale(h), "empty")) + "</speak>")

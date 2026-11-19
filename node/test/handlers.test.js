@@ -356,3 +356,38 @@ test("the bridge can be built from a key alone, without passing an api", () => {
   assert.equal(b.localeOf({ requestEnvelope: { request: { locale: "es-US" } } }), "es-US");
   assert.equal(b.localeOf({}), "en-US");
 });
+
+/* ------------------------------------------- a skill's own slotless intents */
+
+test("a skill maps its own slotless intent to a sentence, per language", async () => {
+  const h = build({
+    intentSentences: {
+      InboxIntent: { pt: "tenho mensagens novas", en: "do I have new messages" },
+      EarningsIntent: { pt: "quanto ganhei este mês", en: "how much did I earn this month" },
+    },
+  });
+  await h.catchAll.handle(input({ intent: "InboxIntent", locale: "pt-BR" }));
+  assert.equal(h.log.find((c) => c[0] === "chat")[2].message, "tenho mensagens novas");
+
+  const h2 = build({ intentSentences: { InboxIntent: { pt: "tenho mensagens novas", en: "do I have new messages" } } });
+  await h2.catchAll.handle(input({ intent: "InboxIntent", locale: "en-GB" }));
+  assert.equal(h2.log.find((c) => c[0] === "chat")[2].message, "do I have new messages");
+});
+
+test("a single string works too, for a skill in one language", async () => {
+  const h = build({ intentSentences: { OrdersIntent: "tenho encomendas novas" } });
+  await h.catchAll.handle(input({ intent: "OrdersIntent", locale: "pt-BR" }));
+  assert.equal(h.log.find((c) => c[0] === "chat")[2].message, "tenho encomendas novas");
+});
+
+test("a slot still wins over the map, because the customer's own words come first", async () => {
+  const h = build({ intentSentences: { FindIntent: { pt: "procuro alguém" } } });
+  await h.catchAll.handle(input({ intent: "FindIntent", slots: { service: { value: "designer de logótipos" } }, locale: "pt-BR" }));
+  assert.equal(h.log.find((c) => c[0] === "chat")[2].message, "designer de logótipos");
+});
+
+test("the skill's map overrides an ORYKSA default of the same name", async () => {
+  const h = build({ intentSentences: { AgendaIntent: { pt: "que trabalhos tenho hoje" } } });
+  await h.catchAll.handle(input({ intent: "AgendaIntent", locale: "pt-BR" }));
+  assert.equal(h.log.find((c) => c[0] === "chat")[2].message, "que trabalhos tenho hoje");
+});

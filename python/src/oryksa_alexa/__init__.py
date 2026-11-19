@@ -28,14 +28,14 @@ from .handlers import (
     oryksa_handlers,
     send_progressive,
 )
-from .speech import escape_ssml, text_for, to_ssml, utterance_of
+from .speech import escape_ssml, pick_sentence, text_for, to_ssml, utterance_of
 
 __version__ = VERSION
 
 __all__ = [
     "VERSION", "__version__", "DEFAULT_BASE", "SUPPORTED_LOCALES",
     "OryksaApi", "OryksaError", "lang_of", "conversation_id_for",
-    "to_ssml", "escape_ssml", "text_for", "utterance_of",
+    "to_ssml", "escape_ssml", "text_for", "utterance_of", "pick_sentence",
     "apl_supported", "apl_document", "apl_directive",
     "OryksaBridge", "oryksa_handlers", "create_skill", "send_progressive",
     "LaunchHandler", "StopHandler", "HelpHandler", "CatchAllHandler",
