@@ -1,0 +1,69 @@
+{
+  "manifest": {
+    "manifestVersion": "1.0",
+    "publishingInformation": {
+      "isAvailableWorldwide": true,
+      "distributionCountries": [],
+      "category": "BUSINESS_AND_FINANCE",
+      "testingInstructions": "REPLACE THIS. Tell the reviewer how to try the skill: say \"open <your invocation name>\" and then ask a question about the business. If you turned account linking on, give the reviewer a test account.",
+      "locales": {
+        "en-US": {
+          "name": "YOUR BUSINESS NAME",
+          "summary": "Ask our AI assistant anything about our products, prices and opening hours.",
+          "description": "Talk to the AI assistant of YOUR BUSINESS NAME on your Echo.\n\nAsk about products, prices, opening hours, your order, or anything else the business can answer. The assistant knows the business and answers in your language.\n\nWHAT YOU CAN SAY\n- \"open YOUR INVOCATION NAME\"\n- \"ask YOUR INVOCATION NAME what time you open\"\n- \"ask YOUR INVOCATION NAME about delivery\"\n\nREPLACE every line above with your own words before you submit. Amazon rejects a skill whose description does not match what it does.",
+          "examplePhrases": [
+            "Alexa, open YOUR INVOCATION NAME",
+            "Alexa, ask YOUR INVOCATION NAME what time you open",
+            "Alexa, ask YOUR INVOCATION NAME about delivery"
+          ],
+          "keywords": ["assistant", "customer service", "business", "support"],
+          "smallIconUri": "https://REPLACE-WITH-YOUR-ICON/icon108.png",
+          "largeIconUri": "https://REPLACE-WITH-YOUR-ICON/icon512.png"
+        },
+        "pt-BR": {
+          "name": "O NOME DO SEU NEGÓCIO",
+          "summary": "Pergunte à nossa assistente de IA sobre produtos, preços e horários.",
+          "description": "Fale com a assistente de IA do NOME DO SEU NEGÓCIO no seu Echo.\n\nPergunte sobre produtos, preços, horários, o seu pedido, ou qualquer outra coisa que o negócio possa responder. A assistente conhece o negócio e responde no seu idioma.\n\nO QUE VOCÊ PODE DIZER\n- \"abre O SEU NOME DE INVOCAÇÃO\"\n- \"pergunta ao O SEU NOME DE INVOCAÇÃO que horas vocês abrem\"\n- \"pergunta ao O SEU NOME DE INVOCAÇÃO sobre entrega\"\n\nSUBSTITUA todas as linhas acima pelas suas palavras antes de submeter. A Amazon rejeita uma skill cuja descrição não corresponde ao que ela faz.",
+          "examplePhrases": [
+            "Alexa, abre O SEU NOME DE INVOCAÇÃO",
+            "Alexa, pergunta ao O SEU NOME DE INVOCAÇÃO que horas vocês abrem",
+            "Alexa, pergunta ao O SEU NOME DE INVOCAÇÃO sobre entrega"
+          ],
+          "keywords": ["assistente", "atendimento", "negócio", "suporte"],
+          "smallIconUri": "https://REPLACE-WITH-YOUR-ICON/icon108.png",
+          "largeIconUri": "https://REPLACE-WITH-YOUR-ICON/icon512.png"
+        }
+      }
+    },
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "usesPersonalInfo": true,
+      "isChildDirected": false,
+      "isExportCompliant": true,
+      "containsAds": false,
+      "locales": {
+        "en-US": {
+          "privacyPolicyUrl": "https://REPLACE-WITH-YOUR-SITE/privacy",
+          "termsOfUseUrl": "https://REPLACE-WITH-YOUR-SITE/terms"
+        },
+        "pt-BR": {
+          "privacyPolicyUrl": "https://REPLACE-WITH-YOUR-SITE/privacy",
+          "termsOfUseUrl": "https://REPLACE-WITH-YOUR-SITE/terms"
+        }
+      }
+    },
+    "apis": {
+      "custom": {
+        "interfaces": [
+          {
+            "type": "ALEXA_PRESENTATION_APL",
+            "supportedViewports": [
+              { "mode": "HUB", "shape": "RECTANGLE", "minWidth": 600, "maxWidth": 1920, "minHeight": 480, "maxHeight": 1200 },
+              { "mode": "HUB", "shape": "ROUND", "minWidth": 480, "maxWidth": 480, "minHeight": 480, "maxHeight": 480 }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

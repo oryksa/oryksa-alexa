@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oryksa-alexa"
+version = "1.2.79"
+description = "Put your ORYKSA AI employee inside your own Alexa skill: one catch-all handler, SSML replies, progressive response and an Echo Show card."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "ORYKSA AI Employees" }]
+keywords = ["oryksa", "alexa", "alexa-skill", "ask-sdk", "echo", "voice", "ai-agent", "customer-support", "sdk"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.optional-dependencies]
+# Only needed for create_skill(); the handlers and the client work without it.
+skill = ["ask-sdk-core>=1.11.0"]
+
+[project.urls]
+Homepage = "https://developer.oryksa.com"
+Repository = "https://github.com/oryksa/oryksa-alexa"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]

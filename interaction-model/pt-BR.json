@@ -1,0 +1,352 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "oryksa",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "o que posso fazer",
+            "o que você faz",
+            "o que você pode fazer",
+            "o que posso perguntar",
+            "quais são as opções",
+            "como funciona",
+            "ajuda"
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "samples": []
+        },
+        {
+          "name": "SummaryIntent",
+          "samples": [
+            "resumo",
+            "resumo do dia",
+            "como está o dia",
+            "como estão as coisas",
+            "me dá um resumo",
+            "o que aconteceu hoje",
+            "como vai o negócio"
+          ]
+        },
+        {
+          "name": "AgendaIntent",
+          "samples": [
+            "agenda",
+            "minha agenda",
+            "qual é a minha agenda",
+            "agendamentos",
+            "quais são os agendamentos",
+            "tenho marcações",
+            "próximas marcações",
+            "quem marcou"
+          ]
+        },
+        {
+          "name": "MessagesIntent",
+          "samples": [
+            "mensagens",
+            "últimas mensagens",
+            "quem me mandou mensagem",
+            "tenho mensagens novas",
+            "o que os clientes disseram",
+            "mensagens dos clientes"
+          ]
+        },
+        {
+          "name": "CreditsIntent",
+          "samples": [
+            "créditos",
+            "quantos créditos tenho",
+            "interações",
+            "quantas interações usei",
+            "meu saldo",
+            "quanto eu gastei"
+          ]
+        },
+        {
+          "name": "PauseAIIntent",
+          "samples": [
+            "pausar a ia",
+            "pausa a ia",
+            "desliga a ia",
+            "desligar a inteligência artificial",
+            "para de responder os clientes",
+            "pausar respostas automáticas"
+          ]
+        },
+        {
+          "name": "ResumeAIIntent",
+          "samples": [
+            "ligar a ia",
+            "liga a ia",
+            "ativa a ia",
+            "retomar a ia",
+            "volta a responder os clientes",
+            "ativar respostas automáticas"
+          ]
+        },
+        {
+          "name": "AskIntent",
+          "slots": [
+            {
+              "name": "q",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "pergunta {q}",
+            "perguntar {q}",
+            "diz-me {q}",
+            "me diz {q}",
+            "quero {q}",
+            "quero saber {q}",
+            "faz {q}",
+            "faça {q}",
+            "me ajuda com {q}",
+            "ajuda-me com {q}",
+            "o que você acha de {q}",
+            "como faço para {q}",
+            "procura {q}",
+            "verifica {q}",
+            "mostra-me {q}",
+            "preciso de {q}",
+            "sobre {q}"
+          ]
+        },
+        {
+          "name": "EmailIntent",
+          "samples": [
+            "verifica os meus emails",
+            "ver os meus emails",
+            "tenho emails novos",
+            "lê os meus emails",
+            "ler meus emails",
+            "resume os meus emails",
+            "o que chegou no email",
+            "checar meu email",
+            "verificar os meus emails",
+            "verificar meus emails",
+            "ver meus emails"
+          ]
+        },
+        {
+          "name": "CalendarIntent",
+          "samples": [
+            "calendário",
+            "o que tenho no calendário",
+            "meu calendário",
+            "próximos eventos",
+            "que reuniões tenho",
+            "o que tenho no google calendar",
+            "ver meu calendário"
+          ]
+        },
+        {
+          "name": "IntegrationsIntent",
+          "samples": [
+            "minhas integrações",
+            "que integrações tenho",
+            "que integrações estão ligadas",
+            "o que está ligado",
+            "quais integrações estão conectadas"
+          ]
+        },
+        {
+          "name": "CreateEventIntent",
+          "slots": [
+            {
+              "name": "person",
+              "type": "AMAZON.FirstName"
+            },
+            {
+              "name": "date",
+              "type": "AMAZON.DATE",
+              "samples": [
+                "{date}"
+              ]
+            },
+            {
+              "name": "time",
+              "type": "AMAZON.TIME",
+              "samples": [
+                "{time}"
+              ]
+            }
+          ],
+          "samples": [
+            "marca uma reunião com {person} {date} às {time}",
+            "marca uma reunião {date} às {time}",
+            "marca reunião com {person} {date} às {time}",
+            "agenda uma reunião {date} às {time}",
+            "marca {date} às {time}",
+            "marca um compromisso {date} às {time}",
+            "marca uma reunião com {person}",
+            "marca uma reunião",
+            "marcar reunião",
+            "adiciona um evento ao calendário",
+            "põe uma reunião no calendário"
+          ]
+        },
+        {
+          "name": "ReplyEmailIntent",
+          "slots": [
+            {
+              "name": "person",
+              "type": "AMAZON.FirstName"
+            }
+          ],
+          "samples": [
+            "responde ao {person}",
+            "responde à {person}",
+            "responde ao email do {person}",
+            "responde ao email da {person}",
+            "responder ao {person}",
+            "responde a {person}"
+          ]
+        },
+        {
+          "name": "EmailBodyIntent",
+          "slots": [
+            {
+              "name": "text",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "diz que {text}",
+            "diga que {text}",
+            "responde que {text}",
+            "a mensagem é {text}",
+            "escreve {text}"
+          ]
+        }
+      ],
+      "types": []
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "PauseAIIntent",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent.Pause"
+          },
+          "slots": []
+        },
+        {
+          "name": "ResumeAIIntent",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent.Resume"
+          },
+          "slots": []
+        },
+        {
+          "name": "CreateEventIntent",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent.Event"
+          },
+          "slots": [
+            {
+              "name": "person",
+              "type": "AMAZON.FirstName",
+              "elicitationRequired": false,
+              "confirmationRequired": false,
+              "prompts": {}
+            },
+            {
+              "name": "date",
+              "type": "AMAZON.DATE",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.Event.date"
+              }
+            },
+            {
+              "name": "time",
+              "type": "AMAZON.TIME",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.Event.time"
+              }
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "SKILL_RESPONSE"
+    },
+    "prompts": [
+      {
+        "id": "Confirm.Intent.Pause",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Quer mesmo pausar a IA em todos os canais?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Intent.Resume",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Quer ligar a IA para voltar a responder aos clientes?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.Event.date",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Para que dia?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.Event.time",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "A que horas?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Intent.Event",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Confirma a marcação no calendário para {date} às {time}?"
+          }
+        ]
+      }
+    ]
+  }
+}
