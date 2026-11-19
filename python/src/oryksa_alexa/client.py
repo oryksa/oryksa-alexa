@@ -16,7 +16,7 @@ import urllib.error
 import urllib.request
 from typing import Any, Dict, Optional
 
-VERSION = "1.2.79"
+VERSION = "1.2.82"
 DEFAULT_BASE = "https://api.oryksa.com/v1"
 SDK_HEADER = "alexa-python/" + VERSION
 

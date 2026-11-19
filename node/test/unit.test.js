@@ -108,8 +108,8 @@ test("SSML: empty and null never blow up", () => {
 });
 
 test("the conversation id is accepted by the server and stays the same for the same user", () => {
-  const a = conversationIdFor("amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMNWY4C");
-  const b = conversationIdFor("amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMNWY4C");
+  const a = conversationIdFor("amzn1.ask.account.EXAMPLEUSERIDFORTESTSONLY000000000");
+  const b = conversationIdFor("amzn1.ask.account.EXAMPLEUSERIDFORTESTSONLY000000000");
   assert.equal(a, b, "the same Echo user keeps their history");
   assert.match(a, /^[A-Za-z0-9_-]{1,64}$/, "server rule: letters, digits, _ and -, max 64");
   assert.ok(a.length <= 64);

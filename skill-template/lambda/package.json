@@ -4,7 +4,7 @@
   "description": "My ORYKSA AI employee on Alexa",
   "main": "index.js",
   "dependencies": {
-    "@oryksa/alexa": "^1.2.79",
+    "@oryksa/alexa": "^1.2.82",
     "ask-sdk-core": "^2.14.0"
   }
 }

@@ -212,8 +212,8 @@ class TestPieces(unittest.TestCase):
         self.assertEqual(escape_ssml(None), "")
 
     def test_conversation_id_is_accepted_by_the_server_and_stable(self):
-        a = conversation_id_for("amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMNWY4C")
-        b = conversation_id_for("amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMNWY4C")
+        a = conversation_id_for("amzn1.ask.account.EXAMPLEUSERIDFORTESTSONLY000000000")
+        b = conversation_id_for("amzn1.ask.account.EXAMPLEUSERIDFORTESTSONLY000000000")
         self.assertEqual(a, b)
         self.assertRegex(a, r"^[A-Za-z0-9_-]{1,64}$")
         self.assertNotEqual(a, conversation_id_for("amzn1.ask.account.OTHER"))

@@ -1,26 +1,10 @@
 # Changelog
 
-## 1.2.79.1 (2026-11-19, later the same day)
+## 1.2.82 (2026-11-19)
 
-Two things the first real customer skill needed, plus one bug that would have
-broken every skill built on the template.
+First version. The number is the one the whole ORYKSA ecosystem is on.
 
-- `lang` forces the language the AI answers in. Alexa has no `pt-PT`, so a
-  Portuguese business runs on the `pt-BR` locale and would otherwise be answered
-  in Brazilian Portuguese.
-- `intentSentences` / `intent_sentences` maps a skill's own slotless shortcut
-  intents to the sentence a person would have said, so they reach an AI that
-  only speaks prose. A slot always wins over the map, and `pt` and `br` answer
-  for each other.
-- **The skill template answered with nothing.** `ask-sdk`'s `.lambda()` hands
-  back a callback-style handler, and the template's wrapper dropped the
-  callback. Fixed, and the template now bridges it to a Promise.
-- `aplSupported` checked the interface by truthiness; a device sending an empty
-  object for it was read as "no screen". It checks for the key now.
-
-## 1.2.79 (2026-11-19)
-
-First version. Two packages, one behaviour.
+Two packages, one behaviour.
 
 - Node `@oryksa/alexa` (ask-sdk-core) and Python `oryksa-alexa` (ask-sdk).
 - One catch-all handler: whatever the customer says reaches the AI employee,
@@ -43,7 +27,7 @@ First version. Two packages, one behaviour.
 - Alexa's own locales only: en-US, en-GB, en-AU, en-CA, en-IN, es-ES, es-MX,
   es-US, pt-BR. Alexa has no pt-PT.
 - The interaction model of the certified ORYKSA skill is included, reused as is.
-- 104 automated tests (54 Node, 50 Python), no network and nothing to install,
+- 115 automated tests (59 Node, 56 Python), no network and nothing to install,
   plus one live test per language against `https://api.oryksa.com/v1`.
 
 Three bugs the live test found before anyone shipped on this:
@@ -58,3 +42,19 @@ Three bugs the live test found before anyone shipped on this:
   network at all.
 
 Each of the three now has a test that fails if it comes back.
+
+What the first real customer skill (TugaFreela) needed, plus one bug that
+would have broken every skill built on the template:
+
+- `lang` forces the language the AI answers in. Alexa has no `pt-PT`, so a
+  Portuguese business runs on the `pt-BR` locale and would otherwise be answered
+  in Brazilian Portuguese.
+- `intentSentences` / `intent_sentences` maps a skill's own slotless shortcut
+  intents to the sentence a person would have said, so they reach an AI that
+  only speaks prose. A slot always wins over the map, and `pt` and `br` answer
+  for each other.
+- **The skill template answered with nothing.** `ask-sdk`'s `.lambda()` hands
+  back a callback-style handler, and the template's wrapper dropped the
+  callback. Fixed, and the template now bridges it to a Promise.
+- `aplSupported` checked the interface by truthiness; a device sending an empty
+  object for it was read as "no screen". It checks for the key now.

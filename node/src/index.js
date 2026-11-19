@@ -8,7 +8,7 @@
 
 import { createHash } from "node:crypto";
 
-export const VERSION = "1.2.79";
+export const VERSION = "1.2.82";
 const DEFAULT_BASE = "https://api.oryksa.com/v1";
 const SDK_HEADER = "alexa-node/" + VERSION;
 // Every request says who it is. The edge in front of the API blocks anonymous

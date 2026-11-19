@@ -1,6 +1,6 @@
 {
   "name": "@oryksa/alexa",
-  "version": "1.2.79",
+  "version": "1.2.82",
   "description": "Put your ORYKSA AI employee inside your own Alexa skill: one catch-all handler, SSML replies, progressive response and an Echo Show card.",
   "type": "module",
   "main": "src/index.js",
@@ -22,6 +22,7 @@
   },
   "sideEffects": false,
   "scripts": {
+    "prepack": "node ../tools/sync-docs.mjs",
     "test": "node --test \"test/*.test.js\"",
     "test:live": "node test/live.mjs"
   },
@@ -49,6 +50,6 @@
     "type": "git",
     "url": "https://github.com/oryksa/oryksa-alexa"
   },
-  "author": "Weslley Harakawa (https://github.com/WeslleyHarakawa)",
+  "author": "ORYKSA AI Employees (https://oryksa.com)",
   "license": "MIT"
 }
