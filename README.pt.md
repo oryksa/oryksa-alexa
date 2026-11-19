@@ -113,6 +113,24 @@ const { bridge } = oryksaHandlers({ apiKey: process.env.ORYKSA_API_KEY });
 return bridge.reply(handlerInput, "o cliente perguntou pela encomenda " + numero);
 ```
 
+## Os teus próprios atalhos
+
+Um atalho teu ("lê as minhas mensagens", "quanto ganhei este mês") não tem slot, por isso não há
+texto para mandar à IA. Dá-lhe a frase que uma pessoa teria dito:
+
+```js
+oryksaHandlers({
+  apiKey: process.env.ORYKSA_API_KEY,
+  intentSentences: {
+    InboxIntent: { pt: "tenho mensagens novas", en: "do I have new messages" },
+    EarningsIntent: { pt: "quanto ganhei este mês", en: "how much did I earn this month" },
+  },
+});
+```
+
+Um slot ganha sempre ao mapa: as palavras do cliente vêm primeiro. O `pt` e o `br` respondem um
+pelo outro, porque os dois são português.
+
 ## Opções
 
 | Opção (Node / Python) | Por omissão | O que faz |
@@ -120,6 +138,8 @@ return bridge.reply(handlerInput, "o cliente perguntou pela encomenda " + numero
 | `apiKey` / `api_key` | obrigatória | A tua chave secreta, `oryk_live_...`. Fica na Lambda. |
 | `progressive` | `true` | Dizer "um momento" enquanto a IA escreve. |
 | `card` | `true` | Desenhar no Echo Show, ou mandar cartão. |
+| `lang` | do aparelho | Forçar a língua da resposta: `pt`, `br`, `en` ou `es`. A Alexa não tem `pt-PT`, por isso um negócio português corre em `pt-BR` e põe `lang: "pt"`. |
+| `intentSentences` / `intent_sentences` | nenhum | Mapear os teus intents sem slot para a frase que uma pessoa teria dito. |
 | `answerDeadlineMs` / `deadline_seconds` | 24 s | Quanto esperar por uma resposta lenta. |
 | `pollIntervalMs` / `poll_seconds` | 0,9 s | De quanto em quanto voltar a ler a conversa. |
 | `sessionTtlMinutes` / `session_ttl_minutes` | 1440 | Validade do token de cliente. |

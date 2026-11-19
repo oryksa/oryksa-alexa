@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.79.1 (2026-11-19, later the same day)
+
+Two things the first real customer skill needed, plus one bug that would have
+broken every skill built on the template.
+
+- `lang` forces the language the AI answers in. Alexa has no `pt-PT`, so a
+  Portuguese business runs on the `pt-BR` locale and would otherwise be answered
+  in Brazilian Portuguese.
+- `intentSentences` / `intent_sentences` maps a skill's own slotless shortcut
+  intents to the sentence a person would have said, so they reach an AI that
+  only speaks prose. A slot always wins over the map, and `pt` and `br` answer
+  for each other.
+- **The skill template answered with nothing.** `ask-sdk`'s `.lambda()` hands
+  back a callback-style handler, and the template's wrapper dropped the
+  callback. Fixed, and the template now bridges it to a Promise.
+- `aplSupported` checked the interface by truthiness; a device sending an empty
+  object for it was read as "no screen". It checks for the key now.
+
 ## 1.2.79 (2026-11-19)
 
 First version. Two packages, one behaviour.

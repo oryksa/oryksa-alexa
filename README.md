@@ -113,6 +113,24 @@ const { bridge } = oryksaHandlers({ apiKey: process.env.ORYKSA_API_KEY });
 return bridge.reply(handlerInput, "the customer asked about order " + orderId);
 ```
 
+## Your own shortcut intents
+
+A shortcut intent of your own ("read my new messages", "how much did I earn this month") has no
+slot, so there is no text to send to the AI. Give it the sentence a person would have said:
+
+```js
+oryksaHandlers({
+  apiKey: process.env.ORYKSA_API_KEY,
+  intentSentences: {
+    InboxIntent: { pt: "tenho mensagens novas", en: "do I have new messages" },
+    EarningsIntent: { pt: "quanto ganhei este mês", en: "how much did I earn this month" },
+  },
+});
+```
+
+A slot always wins over the map: the customer's own words come first. `pt` and `br` answer for
+each other, because both are Portuguese.
+
 ## Options
 
 | Option (Node / Python) | Default | What it does |
@@ -120,6 +138,8 @@ return bridge.reply(handlerInput, "the customer asked about order " + orderId);
 | `apiKey` / `api_key` | required | Your secret key, `oryk_live_...`. Keep it in the Lambda. |
 | `progressive` | `true` | Say "one moment" while the AI writes. |
 | `card` | `true` | Draw on Echo Show, or send a card. |
+| `lang` | from the device | Force the language the AI answers in: `pt`, `br`, `en` or `es`. Alexa has no `pt-PT`, so a Portuguese business runs on the `pt-BR` locale and sets `lang: "pt"`. |
+| `intentSentences` / `intent_sentences` | none | Map your own slotless intents to the sentence a person would have said. |
 | `answerDeadlineMs` / `deadline_seconds` | 24 s | How long to wait for a slow answer. |
 | `pollIntervalMs` / `poll_seconds` | 0.9 s | How often to read the conversation back. |
 | `sessionTtlMinutes` / `session_ttl_minutes` | 1440 | Life of the client token. |
