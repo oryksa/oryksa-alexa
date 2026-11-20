@@ -2,7 +2,7 @@
 
 # oryksa-alexa
 
-[![English](https://img.shields.io/badge/English-0891b2?style=for-the-badge)](README.md) [![Português](https://img.shields.io/badge/Portugu%C3%AAs-30363d?style=for-the-badge)](README.pt.md)
+[![English](https://img.shields.io/badge/English-0891b2?style=for-the-badge)](README.md) [![Português](https://img.shields.io/badge/Portugu%C3%AAs-30363d?style=for-the-badge)](README.pt.md) [![Español](https://img.shields.io/badge/Espa%C3%B1ol-30363d?style=for-the-badge)](README.es.md) [![Français](https://img.shields.io/badge/Fran%C3%A7ais-30363d?style=for-the-badge)](README.fr.md)
 
 Put your **ORYKSA AI employee** inside **your own Alexa skill**. One catch-all handler: whatever the customer says on the Echo reaches the AI that already knows your business, and the answer comes back as speech. Same brain as WhatsApp, the website chat and your app.
 
