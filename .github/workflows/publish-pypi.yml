@@ -1,0 +1,32 @@
+name: publish-pypi
+
+# Publishes the Python package (python/) to PyPI with a trusted publisher (no token stored anywhere).
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  pypi:
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Copy README and LICENSE into the package
+        run: node tools/sync-docs.mjs
+      - name: Build
+        run: |
+          python -m pip install --upgrade build
+          python -m build python
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: python/dist/
