@@ -166,6 +166,6 @@ Feito pela equipa ORYKSA.
 * Programadores: https://developer.oryksa.com
 * X: https://x.com/oryksaai
 * Instagram: https://instagram.com/oryksaai
-* YouTube: https://youtube.com/@oryksaai
+* YouTube: https://youtube.com/@ORYKSA
 
 Licença MIT.
