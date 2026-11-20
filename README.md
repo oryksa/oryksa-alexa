@@ -166,6 +166,6 @@ Built by the ORYKSA team.
 * Developers: https://developer.oryksa.com
 * X: https://x.com/oryksaai
 * Instagram: https://instagram.com/oryksaai
-* YouTube: https://youtube.com/@oryksaai
+* YouTube: https://youtube.com/@ORYKSA
 
 MIT licensed.
